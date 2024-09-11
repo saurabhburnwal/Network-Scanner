@@ -45,3 +45,20 @@ def whois_lookup(ip):
     except Exception as e:
         return str(e)
     
+# Display all LAN devices and WAN info
+def display_info():
+    print("Fetching LAN IPs...")
+    lan_devices = get_lan_ips()
+    for device in lan_devices:
+        ip = device['ip']
+        is_active = ping_ip(ip)
+        print(f"IP: {ip}, MAC: {device['mac']}, Active: {is_active}")
+
+    print("\nFetching WAN IP...")
+    wan_ip = get_public_ip()
+    if wan_ip:
+        print(f"WAN IP: {wan_ip}")
+        print("Fetching WHOIS information...")
+        whois_info = whois_lookup(wan_ip)
+        print(json.dumps(whois_info, indent=4, default=str))  # Convert WHOIS object to string
+
