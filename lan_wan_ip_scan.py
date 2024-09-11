@@ -38,11 +38,6 @@ def get_public_ip():
     
 # WHOIS Lookup for WAN IP using python-whois package
 def whois_lookup(ip):
-    # try:
-    #     w = whois.whois(ip)
-    #     return w  # Return WHOIS data
-    # except Exception as e:
-    #     return str(e)
     url = 'https://whois40.p.rapidapi.com/whois?q=' + ip
 
     headers = {
