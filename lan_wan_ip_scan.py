@@ -14,4 +14,8 @@ def get_lan_ips():
 
     result = srp(packet, timeout=3, verbose=0)[0]
 
-    
+    devices = []
+    for sent, received in result:
+        devices.append({'ip': received.psrc, 'mac': received.hwsrc})
+    return devices
+
