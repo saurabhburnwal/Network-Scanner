@@ -62,3 +62,5 @@ def display_info():
         whois_info = whois_lookup(wan_ip)
         print(json.dumps(whois_info, indent=4, default=str))  # Convert WHOIS object to string
 
+if __name__ == '__main__':
+    display_info()
