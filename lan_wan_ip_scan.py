@@ -19,3 +19,13 @@ def get_lan_ips():
         devices.append({'ip': received.psrc, 'mac': received.hwsrc})
     return devices
 
+# Ping an IP to see if it is active
+def ping_ip(ip):
+    try:
+        # Use 'ping -n 1' for Windows, '-c 1' for Linux/Unix
+        param = '-n' if os.name == 'nt' else '-c'
+        output = subprocess.check_output(f"ping {param} 1 {ip}", shell=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+    
