@@ -2,6 +2,7 @@ import subprocess
 import json
 from scapy.all import ARP, Ether, srp
 import requests
+import sys
 import os
 
 # Get LAN IPs
@@ -40,8 +41,14 @@ def get_public_ip():
 def whois_lookup(ip):
     url = 'https://whois40.p.rapidapi.com/whois?q=' + ip
 
+    try:
+        os.environ['RAPIDAPI_KEY']
+    except KeyError:
+        print("Please set the environment variable RAPIDAPI_KEY")
+        sys.exit(1)
+
     headers = {
-        'X-RAPIDAPI-Key': '13edec893emsh7100e2e39d1ca8bp123019jsn2e53d311e88a',
+        'X-RAPIDAPI-Key': '{}'.format(os.environ['RAPIDAPI_KEY']),
         'X-RAPIDAPI-Host': "whois40.p.rapidapi.com"
     }
 
