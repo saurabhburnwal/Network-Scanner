@@ -3,11 +3,10 @@ import json
 from scapy.all import ARP, Ether, srp
 import requests
 import os
-import whois
 
 # Get LAN IPs
 def get_lan_ips():
-    target_ip = input("Enter the target IP range (e.g.,192.168.1.1/24): ")
+    target_ip = input("Enter the target IP range (e.g.,192.168.1.1/24): ").strip() or '192.168.1.1/24'
     arp = ARP(pdst=target_ip)
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     packet = ether/arp
@@ -39,12 +38,26 @@ def get_public_ip():
     
 # WHOIS Lookup for WAN IP using python-whois package
 def whois_lookup(ip):
-    try:
-        w = whois.whois(ip)
-        return w  # Return WHOIS data
-    except Exception as e:
-        return str(e)
-    
+    # try:
+    #     w = whois.whois(ip)
+    #     return w  # Return WHOIS data
+    # except Exception as e:
+    #     return str(e)
+    url = 'https://whois40.p.rapidapi.com/whois?q=' + ip
+
+    headers = {
+        'X-RAPIDAPI-Key': '13edec893emsh7100e2e39d1ca8bp123019jsn2e53d311e88a',
+        'X-RAPIDAPI-Host': "whois40.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=ip)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(response.status_code)
+        print(response.text)
+
 # Display all LAN devices and WAN info
 def display_info():
     print("Fetching LAN IPs...")
