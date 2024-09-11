@@ -29,3 +29,11 @@ def ping_ip(ip):
     except subprocess.CalledProcessError:
         return False
     
+# Get public IP (WAN)
+def get_public_ip():
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        return response.json()['ip']
+    except Exception as e:
+        return str(e)
+    
