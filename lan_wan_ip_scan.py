@@ -37,3 +37,11 @@ def get_public_ip():
     except Exception as e:
         return str(e)
     
+# WHOIS Lookup for WAN IP using python-whois package
+def whois_lookup(ip):
+    try:
+        w = whois.whois(ip)
+        return w  # Return WHOIS data
+    except Exception as e:
+        return str(e)
+    
